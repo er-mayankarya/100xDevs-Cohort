@@ -5,3 +5,6 @@ console.log(contents);
 
 const contents2 = fs.readFileSync('C:\\b.txt' , 'utf-8');
 console.log(contents2);
+
+const contents3 = fs.readFileSync('C:\\b.txt' , 'utf-8');
+console.log(contents2);
