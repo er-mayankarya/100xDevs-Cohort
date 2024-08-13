@@ -7,6 +7,7 @@ const sum = (a,b) => {
 console.log(sum(1,3));
 
 //Map
+
 /*
 Given an array , give me back a new array 
 Where every value is multiplied of 2
@@ -21,6 +22,7 @@ const ans = input.map((i) =>{
 console.log(ans);
 
 //Filter
+
 /*
 Given  an input array , give me back all the even values.... 
 Input  - [1,2,3,4,5,6]
