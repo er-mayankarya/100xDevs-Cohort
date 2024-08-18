@@ -1,0 +1,21 @@
+div{
+    display: flex;
+    justify-content: space-between;
+    padding-left : 200px;
+    padding-right : 200px;
+}
+
+h1{
+    color : #440202;
+    
+}
+
+#add-btn{
+    background-color: aqua;
+    color : black;
+}
+
+.delete{
+    background-color: red;
+    color : black;
+}
