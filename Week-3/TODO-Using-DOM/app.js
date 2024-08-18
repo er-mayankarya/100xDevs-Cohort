@@ -5,14 +5,14 @@ let input = document.querySelector("input");
 btn.addEventListener("click" , function (){
     let item = document.createElement("Li");
     item.innerText = input.value;
+    ul.appendChild(item);
+    input.value ="";
 
     let delBtn = document.createElement("button");
     delBtn.innerText = "Delete";
     delBtn.classList.add("delete");
-
     item.appendChild(delBtn);
-    ul.appendChild(item);
-    input.value ="";
+    
 });
 
 ul.addEventListener("click" , function (event){
