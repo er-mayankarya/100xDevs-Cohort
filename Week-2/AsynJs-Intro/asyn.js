@@ -1,21 +1,14 @@
-class Rectangle {
-    constructor(width, height, color) {
-         this.width = width;
-         this.height = height;
-         this.color = color; 
-    }
-    
-    area() {
-        const area = this.width * this.height;
-          return area;
-    }
-    
-    paint() {
-             console.log(`Painting with color ${this.color}`);
-    }
-    
- }
- 
- const rect = new Rectangle(2, 4)
- const area = rect.area();
- console.log(area)
+// fs - file system
+const fs = require("fs");
+
+fs.readFile("a.txt", "utf-8", function (err, contents) {
+  console.log(contents);
+});
+
+//seTimeout 
+function run() {
+	console.log("I will run after 1s");
+}
+
+setTimeout(run, 1000);
+console.log("I will run immedietely");
