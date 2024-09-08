@@ -8,10 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "epress": "^0.0.1-security",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2"
-  },
-  "description": ""
+  }
 }
