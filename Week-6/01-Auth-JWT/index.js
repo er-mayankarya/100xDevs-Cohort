@@ -1,4 +1,5 @@
-//JWT - JSON Web Token ----------------- npm jsonwebtoken library
+//JWT - JSON Web Token ----------------- jsonwebtoken external library
+//to install it use npm i jsonwebtoken
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
