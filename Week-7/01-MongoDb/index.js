@@ -57,7 +57,6 @@ app.post("/signin", async function(req, res) {
     }
 })
 
-
 app.post("/todo", auth, async function(req, res) {
     const userId = req.userId;
     const title = req.body.title;
