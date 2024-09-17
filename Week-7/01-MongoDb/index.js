@@ -18,12 +18,12 @@ app.post("/signup", async function(req, res) {
     const password = req.body.password;
     const name = req.body.name;
 
-    const hashedPwd = await bcrypt.hash(password , 5);
-    console.log(hashedPwd);
+    const hashedPassword = await bcrypt.hash(password , 5);
+    console.log(hashedPassword);
 
     await UserModel.create({
         email: email,
-        password: hashedPwd,
+        password: hashedPassword,
         name: name
     });
     
@@ -37,15 +37,18 @@ app.post("/signin", async function(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    const response = await UserModel.findOne({
+    const user = await UserModel.findOne({
         email: email,
-        password: password,
     });
 
-    if (response) {
+    const passwordMatch = bcrypt.compare(password, user.password);
+
+    if (user && passwordMatch) {
         const token = jwt.sign({
-            id : response._id.toString()
+            id: user._id.toString()
         }, JWT_SECRET);
+
+        res.header("token" , token);
 
         res.json({
             token
@@ -55,7 +58,7 @@ app.post("/signin", async function(req, res) {
             message: "Incorrect creds"
         })
     }
-})
+});
 
 app.post("/todo", auth, async function(req, res) {
     const userId = req.userId;
