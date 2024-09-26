@@ -14,15 +14,15 @@ adminRouter.post("/signin" , (req , res) => {
 
 });
 
-adminRouter.post("/course-create" , (req,res) => {
+adminRouter.post("/course" , (req,res) => {
 
 });
 
-adminRouter.put("/course-update" , (req,res) => {
+adminRouter.put("/course" , (req,res) => {
 
 });
 
-adminRouter.get("/courses-preview" , (req,res) => {
+adminRouter.get("/course/bulk" , (req,res) => {
 
 });
 
