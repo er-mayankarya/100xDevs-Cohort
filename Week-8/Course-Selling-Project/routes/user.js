@@ -1,6 +1,9 @@
 const { Router } = require("express");
 const { userModel } = require("../db");
 
+const jwt = require('jsonwebtoken');
+const JWT_USER_PASSWORD = "aryaaaaa";
+
 const userRouter = Router();
 
 // Users End-Points
@@ -22,8 +25,32 @@ userRouter.post("/signup" , async (req , res) => {
 
 });
 
-userRouter.post("/sinin" , (req ,res) => {
+userRouter.post("/sinin" , async (req ,res) => {
+    const { email , password } = req.body;
 
+    //Todo : Ideally hashed the password & compare it from the user's pwd from DB
+    const user = await userModel.findOne({
+        email ,
+        password
+    });
+
+    if(user){
+        const token = jwt.sign({
+            id : user._id
+        } , JWT_USER_PASSWORD);
+
+        //TODO : Do Cookies Logic
+
+        res.header("token" , token);
+
+        res.send({
+            token
+        });
+    }else{
+        res.status(403).send({
+            message : "Invalid Credintials"
+        })
+    }
 });
 
 userRouter.get("/purchases" , (req ,res) => {
