@@ -2,7 +2,7 @@ const { Router } = require('express');
 const adminRouter = Router();
 
 const jwt = require('jsonwebtoken');
-const JWT_ADMIN_PASSWORD = "kdvbkjsdvbk";
+const { JWT_ADMIN_PASSWORD } = require("../config");
 
 const { adminModel } = require("../db");
 
@@ -55,6 +55,12 @@ adminRouter.post("/signin" , async (req , res) => {
 });
 
 adminRouter.post("/course" , (req,res) => {
+
+    const adminId = req.adminId;
+
+    res.json({
+        message : "You Courses"
+    });
 
 });
 
