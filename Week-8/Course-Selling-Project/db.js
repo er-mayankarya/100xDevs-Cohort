@@ -15,7 +15,7 @@ const adminSchema = new Schema({
 });
 
 const courseSchema = new Schema({
-    tiltle : String ,
+    title : String ,
     description : String ,
     price : Number ,
     imageUrl : String ,
