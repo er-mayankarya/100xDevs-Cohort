@@ -1,8 +1,9 @@
 const { Router } = require("express");
-const { userModel } = require("../db");
+const { userModel, purchaseModel, courseModel } = require("../db");
 
 const jwt = require('jsonwebtoken');
 const { JWT_USER_PASSWORD } = require("../config");
+const { userMiddleware } = require("../middlewares/userMiddleware");
 
 const userRouter = Router();
 
@@ -53,7 +54,21 @@ userRouter.post("/sinin" , async (req ,res) => {
     }
 });
 
-userRouter.get("/purchases" , (req ,res) => {
+userRouter.get("/purchases" , userMiddleware , async (req ,res) => {
+    const userId = req.userId;
+
+    const purchases = await purchaseModel.find({
+        userId
+    });
+
+    const courseData = await courseModel.find({
+        _id : { $in: purchases.map(x => x.courseId) }
+    })
+
+    req.send({
+        purchases,
+        courseData
+    })
 
 });
 
