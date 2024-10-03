@@ -1,7 +1,8 @@
 const express = require("express");
 const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); //Used for hasing the password
+const { z } = require("zod"); //Used for Input validation
 
 const app = express();
 
@@ -14,10 +15,27 @@ mongoose.connect("mongodb+srv://mayankarya7:v71xw9cFMJD6HThm@cluster0.qx4z2kb.mo
 app.use(express.json());
 
 app.post("/signup", async (req, res)=> {
+     
+    // Input Validation
+    const requiredBody = z.object({
+        email : z.string().email(),
+        password : z.string(),
+        name : z.string()
+    });
+
+    const passedDataWithSucess = requiredBody.safeParse(req.body);
+
+    if (!passedDataWithSucess.success) {
+        res.status(403).send({
+            message : "Invalid Format" ,
+            error : passedDataWithSucess.error
+        });
+    }
+
     const email = req.body.email;
     const password = req.body.password;
     const name = req.body.name;
-
+    
     const hasedPassword = await bcrypt.hash(password , 5);
     console.log(hasedPassword);
 
@@ -29,7 +47,9 @@ app.post("/signup", async (req, res)=> {
     
     res.json({
         message: "You are signed up"
-    })
+    });
+    
+    
 });
 
 
@@ -41,7 +61,15 @@ app.post("/signin", async function(req, res) {
         email: email,
     });
 
-    if (user) {
+    if(!user){
+        res.status(403).send({
+            message : "User isn't exist in our DB."
+        })
+    }
+
+    const passwordMatch = await bcrypt.compare(password , user.password);
+
+    if (user && passwordMatch) {
         const token = jwt.sign({
             id: user._id.toString()
         }, JWT_SECRET);
