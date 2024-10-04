@@ -10,7 +10,7 @@ const { UserModel, TodoModel } = require("./db");
 const { auth , JWT_SECRET } = require("./auth");
 
 
-mongoose.connect("mongodb+srv://mayankarya7:v71xw9cFMJD6HThm@cluster0.qx4z2kb.mongodb.net/ToDo-App-Database");
+mongoose.connect(process.env.MONGO_URL);
 
 app.use(express.json());
 
