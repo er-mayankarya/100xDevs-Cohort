@@ -7,7 +7,7 @@ const { z } = require("zod"); //Used for Input validation
 const app = express();
 
 const { UserModel, TodoModel } = require("./db");
-const { auth , JWT_SECRET } = require("./auth");
+const { auth , JWT_SECRET } = require("./middleware/auth");
 
 
 mongoose.connect(process.env.MONGO_URL);
