@@ -1,15 +1,46 @@
+
+// Understanding useState() hook => Add Post Like LinkedIn 
+
+import React, { useState, useEffect } from "react";
+import { PostComponent } from "./Post";
+
 function App() {
+
+  const [posts, setPosts] = useState([]);
+
+  const postComponents = posts.map(post =>
+    <PostComponent
+      name={post.name}
+      subtitle={post.subtitle}
+      description={post.description}
+      time={post.time}
+      image={post.image}
+    />
+
+  )
+
+  function addPost() {
+
+    setPosts([...posts, {
+      name: "100xDevs",
+      subtitle: "20000 Followers",
+      description: "What to win big ! Follow for more updates....",
+      time: "20m ago",
+      image: "https://tinyurl.com/4e645a7k"
+    }]);
+  }
+
+
   return (
     <>
       <div style={{ backgroundColor: "#dfe6e9", height: "100vh" }}>
+        <button onClick={addPost}>Add Posts</button>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div>
-          <PostComponent 
-          name = {"100xDevs"} 
-          followerCount={20}
-          description={"What to win big ! Follow for more updates...."}
-          time={20}
-          image={"https://tinyurl.com/4e645a7k"}/>
+            <Counter/>
+            <ToggleMessage />
+            {postComponents}
+            <br />
           </div>
         </div>
       </div>
@@ -17,34 +48,35 @@ function App() {
   );
 }
 
-const style = {
-  width: 200,
-  backgroundColor: "white",
-  boderRadius: 50,
-  boderColor: "gray",
-  boderWidth: 1,
-  padding: 23
+//Conditional re-rendering
+const ToggleMessage = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setIsVisible(!isVisible)}>Toggle Message</button>
+      {isVisible && <p>This message is conditionally rendered!</p>}
+    </div>
+  );
 };
 
-function PostComponent({name , followerCount , time , image ,description}) {
-  return <div style={style}>
-    <div style={{ display: "flex" }}>
-      <img src={image}
-        style={{
-          width: 35,
-          height: 35,
-          borderRadius : 20
-        }} />
-      <div style={{ fontSize: 10, marginLeft: 10 }}>
-        <b>
-          {name}
-        </b>
-        <div>{followerCount} Followers</div>
-        <div>{time}m ago</div>
-      </div>
-    </div>
-    <div style={{ fontSixe: 12 }}>{description}</div>
+
+//useEffect() Hook , dependencies array , cleanup code
+
+const Counter = () => {
+  const [count, setCount] = useState(1);
+
+  useEffect(function () {
+    const interval = setInterval(() => {
+      setCount(currentValue => currentValue + 1);
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [])
+
+  return <div>
+    Counter : {count}
   </div>
-}
+};
 
 export default App;
