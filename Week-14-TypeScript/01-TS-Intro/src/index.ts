@@ -1,4 +1,4 @@
-/*function greet(firstName: string){
+function greet(firstName: string){
     console.log("hello " + firstName);
 }
 
@@ -8,7 +8,7 @@ function sum(a : number , b: number){
     return a + b;
 }
 
-console.log(sum(1,2));*/
+console.log(sum(1,2));
 
 interface People {
     name : string ,
