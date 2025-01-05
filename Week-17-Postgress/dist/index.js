@@ -8,32 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-const pgClient = new pg_1.Client("postgresql://neondb_owner:VsWe54ARyuIm@ep-ancient-sunset-a5mu91l6.us-east-2.aws.neon.tech/neondb?sslmode=require");
-pgClient.connect();
-app.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const username = req.body.username;
-        const password = req.body.password;
-        const email = req.body.email;
-        const insertQuery = `INSERT INTO users (username , email , password ) VALUES ($1 , $2 , $3)`;
-        const response = yield pgClient.query(insertQuery, [username, email, password]);
-        res.json({
-            message: "You have Signed Up"
-        });
-    }
-    catch (e) {
-        console.log(e);
-        res.json({
-            message: "Error while signing up !!"
-        });
-    }
-}));
-app.listen(3000);
+require("dotenv/config");
+const pgClient = new pg_1.Client(process.env.DB_URI);
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield pgClient.connect();
+        const res = yield pgClient.query("SELECT * FROM users");
+        console.log(res.rows);
+    });
+}
+main();
