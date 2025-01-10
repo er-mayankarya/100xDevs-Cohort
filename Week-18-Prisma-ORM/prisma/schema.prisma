@@ -1,0 +1,28 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// To Migrate Command : mpx prisma migrate dev
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  age Int
+  city String
+  todos Todo[]
+}
+
+model Todo {
+  id Int @unique @default(autoincrement())
+  tiltle String
+  description String
+  done Boolean
+  user_Id Int
+  Users User @relation(fields: [user_Id] , references: [id])
+}
