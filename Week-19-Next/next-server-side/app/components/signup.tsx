@@ -4,12 +4,12 @@ import axios from "axios";
 import { useState } from "react";
 
 export function SignUp() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function handler() {
     await axios.post("http://localhost:3000/api/user", {
-      username,
+      email,
       password,
     });
   }
@@ -20,11 +20,11 @@ export function SignUp() {
         <div className="border p-8 rounded">
           <input
             onChange={(e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
             }}
             className="p-2 m-2"
             type="text"
-            placeholder="username"
+            placeholder="email"
           />
           <br />
           <br />

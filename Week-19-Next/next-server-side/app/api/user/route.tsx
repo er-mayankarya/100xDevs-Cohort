@@ -1,26 +1,37 @@
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export function GET(){
+const client = new PrismaClient();
+
+export function GET() {
   return NextResponse.json({
-    email : "mayank@gmail.com" ,
-    name : "MayAnk"
-  })
+    email: "mayank@gmail.com",
+    name: "MayAnk",
+  });
 }
 
-export async function POST( req : NextRequest){
-
-  //body
+export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  /*
-  //header
-  console.log(req.headers.get("authorization"));
-
-  //query parameter
-  console.log(req.nextUrl.searchParams.get("name"));
-  */
-
-  return NextResponse.json({
-    body
-  })
+  try {
+    await client.user.create({
+      data: {
+        email: body.email,
+        password: body.password,
+      },
+    });
+    return NextResponse.json({
+      body,
+    });
+  } catch (error) {
+    console.log(error)
+    return  NextResponse.json(
+      {
+        message: "error while signing up!!",
+      },
+      {
+        status: 411,
+      }
+    );
+  }
 }
