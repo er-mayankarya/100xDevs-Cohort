@@ -1,17 +1,14 @@
 "use client";
 
-import axios from "axios";
 import { useState } from "react";
+import { signup } from "../actions/user";
 
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function handler() {
-    await axios.post("http://localhost:3000/api/user", {
-      email,
-      password,
-    });
+    signup(email ,password);
   }
 
   return (
